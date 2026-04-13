@@ -30,4 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load saved language or default to PT
     const savedLang = localStorage.getItem('preferredLang') || 'pt';
     setLanguage(savedLang);
+
+    // Scroll Reveal Animation
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            } else {
+                // Remove to allow re-animation when scrolling back
+                entry.target.classList.remove('active');
+            }
+        });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
+    });
 });
